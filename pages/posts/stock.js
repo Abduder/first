@@ -27,7 +27,7 @@ export default function Stock({initialPosts}){
 			</main>
 		</>);
 }
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   let res = await fetch("http://localhost:3000/api/get", {
     method: "GET",
     headers: {
