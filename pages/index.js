@@ -77,7 +77,7 @@ export default function Home({ isConnected }) {
 
 export async function getServerSideProps(context) {
   try {
-    await connectToDatabase
+    await connectToDatabase();
     // `await clientPromise` will use the default database passed in the MONGODB_URI
     // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
     //
