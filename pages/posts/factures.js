@@ -53,7 +53,7 @@ export default function Facture({initialPosts}){
 		</>)
 }
 export async function getServerSideProps(context) {
-  let res = await fetch("http://localhost:3000/api/get", {
+  let res = await fetch("/api/get", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
