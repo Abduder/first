@@ -1,6 +1,17 @@
 import Head from "next/head"
 import Link from "next/link"
-export default function Stock({initialPosts}){
+import { useEffect, useState } from "react";
+export default function Stock(){
+	const [posts, setPosts] = useState([])
+	useEffect(() => {
+		fetch("/api/get", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).then(res => res.json())
+			.then(setPosts);
+	}, [])
 	return(
 		<>
 			<Head>
@@ -16,7 +27,7 @@ export default function Stock({initialPosts}){
 						<p className="quantite">Quantite</p>
 				</div>
 				{
-					initialPosts.map(ele=>{
+					posts.map(ele=>{
 					return (<div className="article" key={ele._id}>
 						<h3 className="nom">{ele.nom}</h3>
 						<p className="prix">{ele.prix}</p>
@@ -26,22 +37,4 @@ export default function Stock({initialPosts}){
 			}
 			</main>
 		</>);
-}
-export async function getServerSideProps(context) {
-  let res = await fetch("/api/get", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  let initialPosts = await res.json();
-
-  /**
-   * Hna khsna nfer9o mabin initial posts w posts, hit mli ghadir useState dyal les posts rah ghadi y t updataw
-   * donc bach madoukhch dima tflsef f smyat d les variables
-   * fl program dyalna ghan3tiwh b3da des posts bach ybda (initiaPosts) 3ad mn be3d ghayb9a ykhdem b posts li ghay t updataw koul ma zdna haja jdida
-   */
-  return {
-    props: { initialPosts },
-  };
 }
