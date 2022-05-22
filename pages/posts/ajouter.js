@@ -13,7 +13,7 @@ export default function Ajouter(){
 			window.alert("Champs manquant")
 		}else{
 			setAdd(true);
-			let res = await fetch("http://localhost:3000/api/post", {
+			let res = await fetch("/api/post", {
       			method: "POST",
       			body: JSON.stringify({
         			nom : nom,
