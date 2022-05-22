@@ -4,13 +4,21 @@ export default function Facture({initialPosts}){
 	const [table, setTable] =useState ([]);
 	const [article, setArticle] = useState("");
 	const [quantite, setQuantite] = useState("");
+	const [initial, setInitial] = useState([]);
+	useEffect(()=>{
+		fetch("/api/get",{
+			method: "GET",
+			headers: {"Content-Type":"aplication/json",
+				 },
+		}).then(res => res.json()).then(setInitial);
+	},[])
 	function ajouter(){
 		if(!article || !quantite){
 			window.alert("Champs manquants")
 		}else{
-			let index = initialPosts.findIndex(ele=>{return ele.nom==article})
+			let index = initial.findIndex(ele=>{return ele.nom==article})
 			if(index>0){
-				let art = initialPosts[index];
+				let art = initial[index];
 				if(art.quantite<quantite){
 					window.alert("Il ne rest que "+art.quantite)
 				}else{
@@ -51,22 +59,4 @@ export default function Facture({initialPosts}){
 				}
 			</main>
 		</>)
-}
-export async function getServerSideProps(context) {
-  let res = await fetch("/api/get", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  let initialPosts = await res.json();
-
-  /**
-   * Hna khsna nfer9o mabin initial posts w posts, hit mli ghadir useState dyal les posts rah ghadi y t updataw
-   * donc bach madoukhch dima tflsef f smyat d les variables
-   * fl program dyalna ghan3tiwh b3da des posts bach ybda (initiaPosts) 3ad mn be3d ghayb9a ykhdem b posts li ghay t updataw koul ma zdna haja jdida
-   */
-  return {
-    props: { initialPosts },
-  };
 }
